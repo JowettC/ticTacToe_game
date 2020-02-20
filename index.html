@@ -9,6 +9,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   <style>
+  body{
+    background: linear-gradient(to bottom, #33cccc 0%, #ffffff 100%);
+  }
     * {
       padding: 0;
       margin: 0;
@@ -57,7 +60,7 @@
     #block_7:hover,
     #block_8:hover,
     #block_9:hover {
-      background-color: grey;
+      background-color: #0099cc;
     }
 
     .row_1,
@@ -69,17 +72,20 @@
     .col_2 {
       border-right: solid;
     }
-    .name, .score{
+
+    .name,
+    .score {
       font-weight: bold;
       float: left;
       font-family: 'Helvetica', 'Arial', sans-serif;
-      margin:2vh;
-      margin-bottom:0px
+      margin: 2vh;
+      margin-bottom: 0px
     }
-    .score{
-      margin-left:6vh;
-      margin-right:6vh;
-      margin-bottom:2vh;
+
+    .score {
+      margin-left: 6vh;
+      margin-right: 6vh;
+      margin-bottom: 2vh;
     }
 
     /* for borders */
@@ -92,20 +98,20 @@
 
   <div id="pageContent" class="center-screen">
     <section>
-    <div id="player1Name" class = "name">
-      Player 1: X
-    </div>
-    <div id="player2Name" class = "name">
-      Player 2: O
-    </div>
+      <div id="player1Name" class="name">
+        Player 1: X
+      </div>
+      <div id="player2Name" class="name">
+        Player 2: O
+      </div>
     </section>
     <section>
-    <div id="score1" class = "score">
-      <span id="score1_val">0</span>
-    </div>
-    <div id="score2" class = "score">
-      <span id="score2_val">0</span>
-    </div>
+      <div id="score1" class="score">
+        <span id="score1_val">0</span>
+      </div>
+      <div id="score2" class="score">
+        <span id="score2_val">0</span>
+      </div>
     </section>
     <div id="board">
       <div id="row_1">
@@ -127,6 +133,8 @@
   </div>
 </body>
 <script>
+  $("#pageContent").fadeOut()
+  $("#pageContent").fadeIn()
   var delayInMilliseconds = 100
   var player1 = "X"
   var score1 = 0
@@ -181,6 +189,20 @@
   }
 
   function checkGame() {
+    var full = true
+    for (i = 0; i < row1.length; i++) {
+      for (j = 0; j < row1.length; j++) {
+        if (board[i][j] != "X" && board[i][j] != "O") {
+          full = false
+          console.log(board[i][j])
+        }
+      }
+    }
+    console.log(full)
+    if (full) {
+      alert("It is a draw")
+      resetGame()
+    }
     mule1 = checkStraight()
     mule2 = checkDiagonal()
     if (mule1 != "" || mule2 != "") {
@@ -200,15 +222,19 @@
   }
 
   function resetGame() {
-    var mule = ["block_1_val", "block_2_val", "block_3_val", "block_4_val", "block_5_val", "block_6_val", "block_7_val", "block_8_val", "block_9_val"]
-    for (i = 0; i < row1.length; i++) {
-      for (j = 0; j < row1.length; j++) {
-        board[i][j] = ""
+    $("#pageContent").fadeOut()
+      for (i = 0; i < row1.length; i++) {
+        for (j = 0; j < row1.length; j++) {
+          board[i][j] = ""
+        }
       }
-    }
+    var mule = ["block_1_val", "block_2_val", "block_3_val", "block_4_val", "block_5_val", "block_6_val", "block_7_val", "block_8_val", "block_9_val"]
+
+
     for (x = 0; x < 9; x++) {
       document.getElementById(mule[x]).innerHTML = ""
     }
+    $("#pageContent").fadeIn()
 
   }
 
