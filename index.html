@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Jowett's TicTacToe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      width: 100%,
+        text-align:center;
+    }
+
+    .center-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    #row_1 div,
+    #row_2 div,
+    #row_3 div {
+      font-family: 'Helvetica', 'Arial', sans-serif;
+      font-size: 8vh;
+      /* font-weight: bold; */
+      /* display: inline-block; */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      float: left;
+      width: 10vh;
+      height: 10vh;
+      padding: 0;
+      margin: 0px;
+    }
+
+    #block_1:hover,
+    #block_2:hover,
+    #block_3:hover,
+    #block_4:hover,
+    #block_5:hover,
+    #block_6:hover,
+    #block_7:hover,
+    #block_8:hover,
+    #block_9:hover {
+      background-color: grey;
+    }
+
+    .row_1,
+    .row_2 {
+      border-bottom: solid;
+    }
+
+    .col_1,
+    .col_2 {
+      border-right: solid;
+    }
+    .name, .score{
+      font-weight: bold;
+      float: left;
+      font-family: 'Helvetica', 'Arial', sans-serif;
+      margin:2vh;
+      margin-bottom:0px
+    }
+    .score{
+      margin-left:6vh;
+      margin-right:6vh;
+      margin-bottom:2vh;
+    }
+
+    /* for borders */
+  </style>
+
+
+</head>
+
+<body>
+
+  <div id="pageContent" class="center-screen">
+    <section>
+    <div id="player1Name" class = "name">
+      Player 1: X
+    </div>
+    <div id="player2Name" class = "name">
+      Player 2: O
+    </div>
+    </section>
+    <section>
+    <div id="score1" class = "score">
+      <span id="score1_val">0</span>
+    </div>
+    <div id="score2" class = "score">
+      <span id="score2_val">0</span>
+    </div>
+    </section>
+    <div id="board">
+      <div id="row_1">
+        <div id="block_1" class="col_1 row_1" onclick="" style="cursor: pointer;"><span id="block_1_val"></span></div>
+        <div id="block_2" class="col_2 row_1" onclick="" style="cursor: pointer;"><span id="block_2_val"></span></div>
+        <div id="block_3" class="col_3 row_1" onclick="" style="cursor: pointer;"><span id="block_3_val"></span></div>
+      </div>
+      <div id="row_2">
+        <div id="block_4" class="col_1 row_2" onclick="" style="cursor: pointer;"><span id="block_4_val"></span></div>
+        <div id="block_5" class="col_2 row_2" onclick="" style="cursor: pointer;"><span id="block_5_val"></span></div>
+        <div id="block_6" class="col_3 row_2" onclick="" style="cursor: pointer;"><span id="block_6_val"></span></div>
+      </div>
+      <div id="row_3">
+        <div id="block_7" class="col_1 row_3" onclick="" style="cursor: pointer;"><span id="block_7_val"></span></div>
+        <div id="block_8" class="col_2 row_3" onclick="" style="cursor: pointer;"><span id="block_8_val"></span></div>
+        <div id="block_9" class="col_3 row_3" onclick="" style="cursor: pointer;"><span id="block_9_val"></span></div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  var delayInMilliseconds = 100
+  var player1 = "X"
+  var score1 = 0
+  var player2 = "O"
+  var score2 = 0
+  var currentPlayer = player1
+  row1 = ["", "", ""]
+  row2 = ["", "", ""]
+  row3 = ["", "", ""]
+  board = [row1, row2, row3]
+
+  let userMove = false;
+  gameover = false;
+
+  function checkSpot(spot) {
+    if (spot == "") {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  function switchPlayer() {
+    if (currentPlayer == "X") {
+      currentPlayer = "O"
+    } else if (currentPlayer == "O") {
+      currentPlayer = "X"
+    }
+  }
+
+  function checkStraight() {
+    for (i = 0; i < row1.length; i++) {
+      if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != "") {
+        return board[i][0]
+      } else if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != "") {
+        return board[0][i]
+
+      }
+    }
+    return ""
+  }
+
+  function checkDiagonal() {
+    if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+      return board[0][0]
+    } else if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+      console.log("test")
+      return board[0][2]
+    } else {
+      return ""
+    }
+  }
+
+  function checkGame() {
+    mule1 = checkStraight()
+    mule2 = checkDiagonal()
+    if (mule1 != "" || mule2 != "") {
+      if (mule1 == "X" || mule2 == "X") {
+        alert("Player 1 wins")
+        score1 = score1 + 1
+        document.getElementById("score1_val").innerHTML = score1;
+        resetGame()
+      } else {
+        alert("Player 2 wins")
+        score2 = score2 + 1
+        document.getElementById("score2_val").innerHTML = score2;
+        resetGame()
+      }
+    }
+    console.log(board)
+  }
+
+  function resetGame() {
+    var mule = ["block_1_val", "block_2_val", "block_3_val", "block_4_val", "block_5_val", "block_6_val", "block_7_val", "block_8_val", "block_9_val"]
+    for (i = 0; i < row1.length; i++) {
+      for (j = 0; j < row1.length; j++) {
+        board[i][j] = ""
+      }
+    }
+    for (x = 0; x < 9; x++) {
+      document.getElementById(mule[x]).innerHTML = ""
+    }
+
+  }
+
+
+
+  $("#block_1").click(function() {
+    if (checkSpot(board[0][0])) {
+      document.getElementById("block_1_val").innerHTML = currentPlayer
+      board[0][0] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  });
+
+  $("#block_2").click(function() {
+    if (checkSpot(board[0][1])) {
+      document.getElementById("block_2_val").innerHTML = currentPlayer;
+      board[0][1] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  })
+
+  $("#block_3").click(function() {
+    if (checkSpot(board[0][2])) {
+      document.getElementById("block_3_val").innerHTML = currentPlayer;
+      board[0][2] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  });
+
+  $("#block_4").click(function() {
+    if (checkSpot(board[1][0])) {
+      document.getElementById("block_4_val").innerHTML = currentPlayer;
+      board[1][0] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  });
+
+  $("#block_5").click(function() {
+    if (checkSpot(board[1][1])) {
+      document.getElementById("block_5_val").innerHTML = currentPlayer;
+      board[1][1] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  });
+
+  $("#block_6").click(function() {
+    if (checkSpot(board[1][2])) {
+      document.getElementById("block_6_val").innerHTML = currentPlayer;
+      board[1][2] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  });
+
+  $("#block_7").click(function() {
+    if (checkSpot(board[2][0])) {
+      document.getElementById("block_7_val").innerHTML = currentPlayer;
+      board[2][0] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  });
+
+  $("#block_8").click(function() {
+    if (checkSpot(board[2][1])) {
+      document.getElementById("block_8_val").innerHTML = currentPlayer;
+      board[2][1] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  });
+
+  $("#block_9").click(function() {
+    if (checkSpot(board[2][2])) {
+      document.getElementById("block_9_val").innerHTML = currentPlayer;
+      board[2][2] = currentPlayer
+      switchPlayer()
+    } else {
+      alert("Spot is taken")
+    }
+    setTimeout(function() {
+      checkGame()
+    }, delayInMilliseconds);
+  });
+</script>
+
+
+</html>
