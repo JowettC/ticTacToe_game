@@ -10,7 +10,8 @@
 
   <style>
   body{
-    background: linear-gradient(to bottom, #33cccc 0%, #ffffff 100%);
+    background-color: black;
+    color:white;
   }
     * {
       padding: 0;
@@ -45,8 +46,8 @@
       text-align: center;
 
       float: left;
-      width: 10vh;
-      height: 10vh;
+      width: 12vh;
+      height: 12vh;
       padding: 0;
       margin: 0px;
     }
@@ -97,22 +98,7 @@
 <body>
 
   <div id="pageContent" class="center-screen">
-    <section>
-      <div id="player1Name" class="name">
-        Player 1: X
-      </div>
-      <div id="player2Name" class="name">
-        Player 2: O
-      </div>
-    </section>
-    <section>
-      <div id="score1" class="score">
-        <span id="score1_val">0</span>
-      </div>
-      <div id="score2" class="score">
-        <span id="score2_val">0</span>
-      </div>
-    </section>
+
     <div id="board">
       <div id="row_1">
         <div id="block_1" class="col_1 row_1" onclick="" style="cursor: pointer;"><span id="block_1_val"></span></div>
@@ -130,6 +116,22 @@
         <div id="block_9" class="col_3 row_3" onclick="" style="cursor: pointer;"><span id="block_9_val"></span></div>
       </div>
     </div>
+    <section>
+      <div id="player1Name" class="name">
+        Player 1: X
+      </div>
+      <div id="player2Name" class="name">
+        Player 2: O
+      </div>
+    </section>
+    <section>
+      <div id="score1" class="score">
+        <span id="score1_val">0</span>
+      </div>
+      <div id="score2" class="score">
+        <span id="score2_val">0</span>
+      </div>
+    </section>
   </div>
 </body>
 <script>
