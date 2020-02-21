@@ -327,24 +327,25 @@
           resetGame()
         }, 2000);
       }
-      else{
-        var full = true
-        for (i = 0; i < row1.length; i++) {
-          for (j = 0; j < row1.length; j++) {
-            if (board[i][j] != "X" && board[i][j] != "O") {
-              full = false
-            }
+
+    }
+    else{
+      var full = true
+      for (i = 0; i < row1.length; i++) {
+        for (j = 0; j < row1.length; j++) {
+          if (board[i][j] != "X" && board[i][j] != "O") {
+            full = false
           }
         }
+      }
 
-        if (full) {
-          tie = tie + 1
-          document.getElementById("tie_val").innerHTML = tie;
-          drawAnimination()
-          setTimeout(function() {
-            resetGame()
-          }, 2000);
-        }
+      if (full) {
+        tie = tie + 1
+        document.getElementById("tie_val").innerHTML = tie;
+        drawAnimination()
+        setTimeout(function() {
+          resetGame()
+        }, 2000);
       }
     }
 
