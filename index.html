@@ -64,17 +64,19 @@
     #block_7:hover,
     #block_8:hover,
     #block_9:hover {
-      background-color: #0099cc;
+      /* background-color: #0099cc; */
     }
 
     .row_1,
     .row_2 {
       border-bottom: solid;
+      border-width: 4px;
     }
 
     .col_1,
     .col_2 {
       border-right: solid;
+      border-width: 4px;
     }
 
     .name,
@@ -159,11 +161,18 @@
   var player2 = "O"
   var score2 = 0
   var tie = 0
+  var winpos1 = 0
+  var winpos2 = 0
+  var winpos3 = 0
   var currentPlayer = player1
   row1 = ["", "", ""]
   row2 = ["", "", ""]
   row3 = ["", "", ""]
   board = [row1, row2, row3]
+  rowpos1 = [1, 2, 3]
+  rowpos2 = [4, 5, 6]
+  rowpos3 = [7, 8, 9]
+  boardpos = [rowpos1, rowpos2, rowpos3]
 
   let userMove = false;
   gameover = false;
@@ -187,65 +196,158 @@
   function checkStraight() {
     for (i = 0; i < row1.length; i++) {
       if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != "") {
-        console.log("test")
+        winpos1 = boardpos[i][0]
+        winpos2 = boardpos[i][1]
+        winpos3 = boardpos[i][2]
         return board[i][0]
       } else if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != "") {
-        console.log("test")
+        winpos1 = boardpos[0][i]
+        winpos2 = boardpos[1][i]
+        winpos3 = boardpos[2][i]
         return board[0][i]
       }
     }
     return ""
   }
-  // // checkGame()
-  // console.log(board)
 
-  if (board[0][0] == board[1][0] && board[1][0] == board[2][0] && board[0][0] != "") {
-    console.log("test")
-  }
+
 
   function checkDiagonal() {
     if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+      winpos1 = boardpos[0][0]
+      winpos2 = boardpos[1][1]
+      winpos3 = boardpos[2][2]
       return board[0][0]
     } else if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+      winpos1 = boardpos[0][2]
+      winpos2 = boardpos[1][1]
+      winpos3 = boardpos[2][0]
       return board[0][2]
     } else {
       return ""
     }
   }
+  var x = 1
+
+  function drawAnimination() {
+    setTimeout(function() {
+      $(".row_1").css('border-bottom', '4px solid black');
+      $(".row_2").css('border-bottom', '4px solid black');
+      $(".col_1").css('border-right', '4px solid black');
+      $(".col_2").css('border-right', '4px solid black');
+    }, 250);
+    setTimeout(function() {
+      $(".row_1").css('border-bottom', '4px solid white');
+      $(".row_2").css('border-bottom', '4px solid white');
+      $(".col_1").css('border-right', '4px solid white');
+      $(".col_2").css('border-right', '4px solid white');
+    }, 500);
+    setTimeout(function() {
+      $(".row_1").css('border-bottom', '4px solid black');
+      $(".row_2").css('border-bottom', '4px solid black');
+      $(".col_1").css('border-right', '4px solid black');
+      $(".col_2").css('border-right', '4px solid black');
+    }, 750);
+
+    setTimeout(function() {
+      $(".row_1").css('border-bottom', '4px solid white');
+      $(".row_2").css('border-bottom', '4px solid white');
+      $(".col_1").css('border-right', '4px solid white');
+      $(".col_2").css('border-right', '4px solid white');
+    }, 1000);
+    setTimeout(function() {
+      $(".row_1").css('border-bottom', '4px solid black');
+      $(".row_2").css('border-bottom', '4px solid black');
+      $(".col_1").css('border-right', '4px solid black');
+      $(".col_2").css('border-right', '4px solid black');
+    }, 1250);
+    setTimeout(function() {
+      $(".row_1").css('border-bottom', '4px solid white');
+      $(".row_2").css('border-bottom', '4px solid white');
+      $(".col_1").css('border-right', '4px solid white');
+      $(".col_2").css('border-right', '4px solid white');
+    }, 1500);
+  }
+
+  function twinAnimination(player) {
+    winblock1 = "block_" + winpos1 + "_val"
+    winblock2 = "block_" + winpos2 + "_val"
+    winblock3 = "block_" + winpos3 + "_val"
+    setTimeout(function() {
+      document.getElementById(winblock1).innerHTML = ""
+      document.getElementById(winblock2).innerHTML = ""
+      document.getElementById(winblock3).innerHTML = "";
+    }, 250);
+    setTimeout(function() {
+      document.getElementById(winblock1).innerHTML = player;
+      document.getElementById(winblock2).innerHTML = player;
+      document.getElementById(winblock3).innerHTML = player;
+    }, 500);
+    setTimeout(function() {
+      document.getElementById(winblock1).innerHTML = ""
+      document.getElementById(winblock2).innerHTML = ""
+      document.getElementById(winblock3).innerHTML = "";
+    }, 750);
+    setTimeout(function() {
+      document.getElementById(winblock1).innerHTML = player
+      document.getElementById(winblock2).innerHTML = player
+      document.getElementById(winblock3).innerHTML = player;
+    }, 1000);
+    setTimeout(function() {
+      document.getElementById(winblock1).innerHTML = ""
+      document.getElementById(winblock2).innerHTML = ""
+      document.getElementById(winblock3).innerHTML = "";
+    }, 1250);
+    setTimeout(function() {
+      document.getElementById(winblock1).innerHTML = player
+      document.getElementById(winblock2).innerHTML = player
+      document.getElementById(winblock3).innerHTML = player
+    }, 1500);
+
+
+  }
+
 
   function checkGame() {
     mule1 = checkStraight()
     mule2 = checkDiagonal()
     if (mule1 != "" || mule2 != "") {
       if (mule1 == "X" || mule2 == "X") {
-        alert("Player 1 wins")
+        twinAnimination("X");
         score1 = score1 + 1
         document.getElementById("score1_val").innerHTML = score1;
-        resetGame()
-      } else {
-        alert("Player 2 wins")
+        setTimeout(function() {
+          resetGame()
+        }, 2000);
+      } else if (mule1 == "O" || mule2 == "O") {
         score2 = score2 + 1
+        twinAnimination("O");
         document.getElementById("score2_val").innerHTML = score2;
-        resetGame()
+        setTimeout(function() {
+          resetGame()
+        }, 2000);
       }
-    }
-    var full = true
-    for (i = 0; i < row1.length; i++) {
-      for (j = 0; j < row1.length; j++) {
-        if (board[i][j] != "X" && board[i][j] != "O") {
-          full = false
-          console.log(board[i][j])
+      else{
+        var full = true
+        for (i = 0; i < row1.length; i++) {
+          for (j = 0; j < row1.length; j++) {
+            if (board[i][j] != "X" && board[i][j] != "O") {
+              full = false
+            }
+          }
+        }
+
+        if (full) {
+          tie = tie + 1
+          document.getElementById("tie_val").innerHTML = tie;
+          drawAnimination()
+          setTimeout(function() {
+            resetGame()
+          }, 2000);
         }
       }
     }
 
-    if (full) {
-      tie = tie + 1
-      document.getElementById("tie_val").innerHTML = tie;
-      alert("It is a draw")
-      console.log(board)
-      resetGame()
-    }
   }
 
   function resetGame() {
@@ -264,7 +366,6 @@
     $("#pageContent").fadeIn()
 
   }
-
 
 
   $("#block_1").click(function() {
